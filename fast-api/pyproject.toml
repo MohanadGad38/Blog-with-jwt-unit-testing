@@ -6,7 +6,9 @@ authors = ["MohanadGad38 <90938419+MohanadGad38@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7.0"
+python = "^3.9.0"
+fastapi = "^0.111.0"
+uvicorn = "^0.29.0"
 
 [build-system]
 requires = ["poetry-core"]
