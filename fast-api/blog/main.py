@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 import uvicorn
-from . import schemas
+from . import schemas, models
+from database import engine
+
+models.Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
 
 
