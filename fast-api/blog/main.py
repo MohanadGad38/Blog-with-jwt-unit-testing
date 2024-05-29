@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, status
+from fastapi import FastAPI, Depends, status, Response
 import uvicorn
 from . import schemas, models
 from .database import engine, SessionLocal
@@ -28,14 +28,17 @@ def create(request: schemas.blog, db: Session = Depends(get_db)):
 @app.get("/blog", status_code=status.HTTP_201_CREATED)
 def fetch(db: Session = Depends(get_db)):
     get_blog = db.query(models.Blog).all()
+
     return get_blog
 
 # if i use .first i will get one object , if i used .all() i will get one object inside a list exxxcept if i have many rows with same id
 
 
 @app.get(f"/blog/{id}", status_code=201)
-def fetch_one(id: int, db: Session = Depends(get_db)):
+def fetch_one(id: int, response: Response, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    if not blog:
+        response.status_code = status.HTTP_404_NOT_FOUND
     return blog
 
 
