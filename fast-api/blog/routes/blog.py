@@ -12,7 +12,7 @@ router = APIRouter(
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-def create(request: schemas.blog, db: Session = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
+def create(request: schemas.addblog, db: Session = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
     return blog.create(request, db)
 
 

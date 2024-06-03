@@ -12,6 +12,13 @@ class blog(blogbase):
         orm_mode = True
 
 
+class addblog(blogbase):
+    userid: str
+
+    class Config():
+        orm_mode = True
+
+
 class user(BaseModel):
     name: str
     email: EmailStr

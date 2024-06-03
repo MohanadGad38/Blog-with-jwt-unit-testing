@@ -11,8 +11,9 @@ def get_all(db: Session = Depends(get_db)):
     return get_blog
 
 
-def create(request: schemas.blog, db: Session = Depends(get_db)):
-    new_blog: models.Blog = models.Blog(title=request.title, body=request.body)
+def create(request: schemas.addblog, db: Session = Depends(get_db)):
+    new_blog: models.Blog = models.Blog(
+        title=request.title, body=request.body, user_id=request.userid)
     db.add(new_blog)
     db.commit()
     db.refresh(new_blog)
