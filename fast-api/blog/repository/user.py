@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 
-def create(request: schemas.blog, db: Session = Depends(get_db)):
+def create(request: schemas.user, db: Session = Depends(get_db)):
     new_user: models.Users = models.Users(
         name=request.name, email=request.email,
         password=hash_p.hashing.create_hash(request.password))

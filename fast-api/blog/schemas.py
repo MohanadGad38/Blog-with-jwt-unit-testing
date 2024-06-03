@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from typing import Annotated, Union
 
 
 class blogbase(BaseModel):
@@ -13,7 +14,7 @@ class blog(blogbase):
 
 class user(BaseModel):
     name: str
-    email: str
+    email: EmailStr
     password: str
 
 
@@ -33,3 +34,17 @@ class show_blog(BaseModel):
 
     class Config():
         orm_mode = True
+
+
+class login(BaseModel):
+    username: str
+    password: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: Union[str, None] = None
