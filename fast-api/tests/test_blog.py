@@ -24,3 +24,14 @@ def test_get_all():
     result: blog = blog.get_all(db=fake_db_session)
     # Assert that the result matches the fake blog data
     assert result == fake_blogs
+
+
+def test_get_one():
+    fake_db_session: MagicMock = MagicMock()
+
+    fake_blog = MagicMock(id=1, title="Test Blog", body="Test Body", user_id=1)
+    fake_db_session.query.return_value.filter.return_value.first.return_value = fake_blog
+
+    result: blog = blog.get_one(1, db=fake_db_session)
+
+    assert result == fake_blog
