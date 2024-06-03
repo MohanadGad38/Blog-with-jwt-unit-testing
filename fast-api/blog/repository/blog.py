@@ -7,7 +7,6 @@ from typing import List
 
 def get_all(db: Session = Depends(get_db)):
     get_blog: models.Blog = db.query(models.Blog).all()
-
     return get_blog
 
 
