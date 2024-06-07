@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, status, Response, HTTPException
 import uvicorn
-from .. import schemas, models, hash_p
-from ..database import engine, get_db
+import schemas
+import models
+import hash_p
+from database import engine, get_db
 from sqlalchemy.orm import Session
 from typing import List
-from ..repository import user
+from repository import user
 router = APIRouter(
     prefix="/user",
     tags=['Users']

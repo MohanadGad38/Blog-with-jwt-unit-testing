@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 import uvicorn
-from . import models
-from .database import engine
-from .routes import blog, user, login
+import models
+from database import engine
+from routes import blog, user, login
 
 models.Base.metadata.create_all(bind=engine)
 
