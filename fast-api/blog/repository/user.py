@@ -5,9 +5,11 @@ import hash_p
 from database import get_db
 from sqlalchemy.orm import Session
 from typing import List
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy import create_engine, Column, Integer, String, select
 
 
-def create(request: schemas.user, db: Session = Depends(get_db)):
+def create(request: schemas.user, db: AsyncSession = Depends(get_db)):
     new_user: models.Users = models.Users(
         name=request.name, email=request.email,
         password=hash_p.hashing.create_hash(request.password))
@@ -18,10 +20,20 @@ def create(request: schemas.user, db: Session = Depends(get_db)):
     return new_user
 
 
-def get(id: int, db: Session = Depends(get_db)):
+async def get(id: int, db: AsyncSession = Depends(get_db)):
     # add types please
-    user: models.Users = db.query(models.Users).filter(
-        models.Users.id == id).first()
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    return user
+    statement = select(models.Users).where(models.Users.id == id)
+    result = await db.execute(statement)
+    # print("dfdsdmskdn")
+    # print(result.scalars().one())
+
+    # user: models.Users = db.query(models.Users).filter(
+    #     models.Users.id == id).first()
+    # print(user)
+    # if not user:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    # return await 'result'
+    # results = await db.execute(select(models.Users))
+    # users = results.scalars().all()
+    gg = result.scalars().one_or_none()
+    return gg

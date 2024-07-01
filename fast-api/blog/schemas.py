@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Annotated, Union
+from typing import Annotated, Union, Optional
 
 
 class blogbase(BaseModel):
@@ -30,8 +30,8 @@ class show_user(BaseModel):
     email: str
     blogs: list[blog] = []
 
-    class Config():
-        from_attributes = True
+    class Config:
+        orm_mode = True
 
 
 class show_blog(BaseModel):

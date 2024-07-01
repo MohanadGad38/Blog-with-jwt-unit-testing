@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from database import Base
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase, Mapped, mapped_column
 
 
 class Blog(Base):
@@ -15,8 +16,9 @@ class Blog(Base):
 
 class Users(Base):
     __tablename__ = 'Users'
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    email = Column(String)
-    password = Column(String)
-    blogs = relationship("Blog", back_populates="creator")
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    # id = Column(Integer, primary_key=True, index=True)
+    name: Mapped[str]
+    email: Mapped[str]
+    password: Mapped[str]
+    blogs: Mapped[list[Blog]] = relationship("Blog", back_populates="creator")
