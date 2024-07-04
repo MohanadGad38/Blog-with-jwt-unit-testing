@@ -31,7 +31,7 @@ class show_user(BaseModel):
     blogs: list[blog] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class show_blog(BaseModel):
