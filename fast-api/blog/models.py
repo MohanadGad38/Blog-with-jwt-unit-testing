@@ -17,8 +17,7 @@ class Blog(Base):
 class Users(Base):
     __tablename__ = 'Users'
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    # id = Column(Integer, primary_key=True, index=True)
     name: Mapped[str]
-    email: Mapped[str]
+    email: Mapped[str] = mapped_column(String, unique=True)
     password: Mapped[str]
     blogs: Mapped[list[Blog]] = relationship("Blog", back_populates="creator")

@@ -2,8 +2,9 @@ from fastapi import Depends, status, HTTPException
 import schemas
 import models
 from database import get_db
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from typing import List
+from sqlalchemy.orm import Session
 
 
 def get_all(db: Session = Depends(get_db)):
@@ -11,12 +12,19 @@ def get_all(db: Session = Depends(get_db)):
     return get_blog
 
 
-def create(request: schemas.addblog, db: Session = Depends(get_db)):
+async def create(request: schemas.addblog, db: AsyncSession = Depends(get_db)):
     new_blog: models.Blog = models.Blog(
         title=request.title, body=request.body, user_id=request.userid)
     db.add(new_blog)
-    db.commit()
-    db.refresh(new_blog)
+    try:
+        await db.commit()
+        await db.refresh(new_blog)
+    except Exception as e:
+        await db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    finally:
+        db.close
     return new_blog
 
 

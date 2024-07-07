@@ -34,6 +34,14 @@ class show_user(BaseModel):
         from_attributes = True
 
 
+class ShowUserNameAndEmail(BaseModel):
+    name: str
+    email: str
+
+    class Config:
+        from_attributes = True
+
+
 class show_blog(BaseModel):
     title: str
     body: str
