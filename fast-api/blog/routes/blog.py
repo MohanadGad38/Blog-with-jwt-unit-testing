@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from repository import blog
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+
 router = APIRouter(
     prefix="/blog",
     tags=['Blogs']
@@ -18,8 +19,8 @@ async def create(request: schemas.addblog, db: AsyncSession = Depends(get_db), g
 
 
 @router.get("/", status_code=status.HTTP_201_CREATED, response_model=List[schemas.show_blog])
-def fetch(db: Session = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
-    return blog.get_all(db)
+async def fetch(db: AsyncSession = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
+    return await blog.get_all(db)
 
 # if i use .first i will get one object , if i used .all() i will get one object inside a list except if i have many rows with same id
 

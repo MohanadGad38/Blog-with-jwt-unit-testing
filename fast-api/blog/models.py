@@ -7,11 +7,11 @@ from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase, Mapped, mappe
 class Blog(Base):
     __tablename__ = 'Blogs'
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    body = Column(String)
-    user_id = Column(Integer, ForeignKey('Users.id'))
-    creator = relationship("Users", back_populates="blogs")
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    title: Mapped[str]
+    body: Mapped[str]
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('Users.id'))
+    creator: Mapped['Users'] = relationship("Users", back_populates="blogs")
 
 
 class Users(Base):

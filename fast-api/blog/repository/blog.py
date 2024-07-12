@@ -4,12 +4,16 @@ import models
 from database import get_db
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from typing import List
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload, joinedload
+from sqlalchemy import create_engine, Column, Integer, String, select
 
 
-def get_all(db: Session = Depends(get_db)):
-    get_blog: models.Blog = db.query(models.Blog).all()
-    return get_blog
+async def get_all(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(models.Blog).options(joinedload(models.Blog.creator))
+    )
+    blogs = result.scalars().all()
+    return blogs
 
 
 async def create(request: schemas.addblog, db: AsyncSession = Depends(get_db)):

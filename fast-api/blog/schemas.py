@@ -45,10 +45,13 @@ class ShowUserNameAndEmail(BaseModel):
 class show_blog(BaseModel):
     title: str
     body: str
-    creator: show_user
+    creator: ShowUserNameAndEmail
 
     class Config():
         from_attributes = True
+
+
+show_user.update_forward_refs()
 
 
 class login(BaseModel):
