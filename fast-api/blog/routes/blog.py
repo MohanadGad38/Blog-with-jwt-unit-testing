@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from repository import blog
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-
+from typing import Tuple, Optional, Dict, Any
 router = APIRouter(
     prefix="/blog",
     tags=['Blogs']
@@ -26,8 +26,8 @@ async def fetch(db: AsyncSession = Depends(get_db), get_current_user: schemas.us
 
 
 @ router.get(f"/{id}", status_code=201, response_model=schemas.show_blog)
-def fetch_one(id: int,  db: Session = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
-    return blog.get_one(id, db)
+async def fetch_one(id: int,  db: AsyncSession = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)) -> Any | schemas.show_blog | None:
+    return await blog.get_one(id, db)
 
 
 # delete(synchronize_session=False)

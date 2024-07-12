@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from typing import List
 from sqlalchemy.orm import Session, selectinload, joinedload
 from sqlalchemy import create_engine, Column, Integer, String, select
+from typing import Tuple, Optional, Dict, Any
 
 
 async def get_all(db: AsyncSession = Depends(get_db)):
@@ -53,9 +54,11 @@ def update(request: schemas.blog, id: int, db: Session = Depends(get_db)):
     return "updated"
 
 
-def get_one(id: int, db: Session = Depends(get_db)):
-    blog: models.Blog = db.query(models.Blog).filter(
-        models.Blog.id == id).first()
+async def get_one(id: int, db: AsyncSession = Depends(get_db)) -> Any | schemas.show_blog | None:
+    statement: models.Blog = select(models.Blog).options(
+        joinedload(models.Blog.creator)).where(models.Blog.id == id)
+    result = await db.execute(statement)
+    blog: schemas.show_blog = result.scalar_one_or_none()
     if not blog:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="not found")
