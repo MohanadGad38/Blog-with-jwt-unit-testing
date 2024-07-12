@@ -32,8 +32,8 @@ async def fetch_one(id: int,  db: AsyncSession = Depends(get_db), get_current_us
 
 # delete(synchronize_session=False)
 @ router.delete(f"/{id}")
-def delete_blog(id: int, db: Session = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
-    return blog.delete(id, db)
+async def delete_blog(id: int, db: AsyncSession = Depends(get_db), get_current_user: schemas.user = Depends(oauth2.get_current_user)):
+    return await blog.delete(id, db)
 
 
 @ router.put(f"/{id}", status_code=status.HTTP_202_ACCEPTED)

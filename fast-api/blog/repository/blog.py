@@ -33,15 +33,20 @@ async def create(request: schemas.addblog, db: AsyncSession = Depends(get_db)):
     return new_blog
 
 
-def delete(id: int, db: Session = Depends(get_db)):
-    blog: models.Blog = db.query(models.Blog).filter(models.Blog.id == id)
-    if not blog.first():
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="blog not avabile ")
-    blog.delete(
-        synchronize_session=False)
-    db.commit()
-    return "deleted"
+async def delete(id: int, db: AsyncSession = Depends(get_db)):
+    async with db.begin():
+        blog_query = select(models.Blog).where(models.Blog.id == id)
+        result = await db.execute(blog_query)
+        blog = result.scalar_one_or_none()
+
+        if not blog:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Blog not found")
+
+        db.delete(blog)
+        await db.commit()
+
+    return {"message": "Blog deleted successfully"}
 
 
 def update(request: schemas.blog, id: int, db: Session = Depends(get_db)):
