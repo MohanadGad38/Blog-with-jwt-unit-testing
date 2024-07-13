@@ -5,6 +5,7 @@
 - reposirty design pattern
 - routes
 - JWT (using barer token type)
+- async for  I/O opretions
 ______________________________________________
 Using pytest 
 - creating test functions for the blogs with mock db 
