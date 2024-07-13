@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy import create_engine, Column, Integer, String, select
 
 router = APIRouter(
     prefix="/login",
@@ -16,9 +18,11 @@ router = APIRouter(
 
 
 @router.post('/')
-def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user: models.Users = db.query(models.Users).filter(
-        models.Users.email == request.username).first()
+async def login(request: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)) -> dict[str, str]:
+    user_query: models.Users = select(models.Users).where(
+        models.Users.email == request.username)
+    result = await db.execute(user_query)
+    user = result.scalar_one_or_none()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail='wrong tyep')

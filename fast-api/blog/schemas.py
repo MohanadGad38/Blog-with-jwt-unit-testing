@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Annotated, Union
+from typing import Annotated, Union, Optional
 
 
 class blogbase(BaseModel):
@@ -9,14 +9,14 @@ class blogbase(BaseModel):
 
 class blog(blogbase):
     class Config():
-        orm_mode = True
+        from_attributes = True
 
 
 class addblog(blogbase):
     userid: str
 
     class Config():
-        orm_mode = True
+        from_attributes = True
 
 
 class user(BaseModel):
@@ -30,17 +30,28 @@ class show_user(BaseModel):
     email: str
     blogs: list[blog] = []
 
-    class Config():
-        orm_mode = True
+    class Config:
+        from_attributes = True
+
+
+class ShowUserNameAndEmail(BaseModel):
+    name: str
+    email: str
+
+    class Config:
+        from_attributes = True
 
 
 class show_blog(BaseModel):
     title: str
     body: str
-    creator: show_user
+    creator: ShowUserNameAndEmail
 
     class Config():
-        orm_mode = True
+        from_attributes = True
+
+
+show_user.update_forward_refs()
 
 
 class login(BaseModel):
