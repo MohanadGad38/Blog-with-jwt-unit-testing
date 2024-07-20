@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, status, Response, HTTPException
 import uvicorn
-import schemas
-import oauth2
-import models
-import hash_p
-from database import engine, get_db
+from blog import schemas
+from blog import oauth2
+from blog import models
+from blog import hash_p
+from blog.database import engine, get_db
 from sqlalchemy.orm import Session
 from typing import List
-from repository import user
+from blog.repository import user
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 router = APIRouter(
     prefix="/user",

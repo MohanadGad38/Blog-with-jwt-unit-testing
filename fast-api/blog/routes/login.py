@@ -1,9 +1,9 @@
 from fastapi import Depends, status, HTTPException, APIRouter
-import schemas
-import models
-import hash_p
-import JWTToken
-from database import get_db
+from blog import schemas
+from blog import models
+from blog import hash_p
+from blog import JWTToken
+from blog.database import get_db
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime, timedelta, timezone

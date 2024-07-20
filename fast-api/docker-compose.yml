@@ -3,7 +3,8 @@ services:
   api:
     build: .
     image: fast-api
+    command: sh -c "uvicorn blog.main:app --reload --host localhost --port 80"
     ports:
-      - "8000:8000"
+      - "8000:80"
     volumes:
       - .:/fast-api:ro

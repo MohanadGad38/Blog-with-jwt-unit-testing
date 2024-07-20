@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, status
-import schemas
-import oauth2
-from database import get_db
+from blog import schemas
+from blog import oauth2
+from blog.database import get_db
 from sqlalchemy.orm import Session
 from typing import List
-from repository import blog
+from blog.repository import blog
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from typing import Tuple, Optional, Dict, Any
 router = APIRouter(
