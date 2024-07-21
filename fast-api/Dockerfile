@@ -1,11 +1,15 @@
-FROM python:latest
+FROM python:3.12.0
 
 # set the working directory
 WORKDIR  /fast-api
 
 # install dependencies
-COPY ./requirements.txt  /fast-api
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+COPY ./pyproject.toml   /fast-api
+
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install 
+# RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # copy the scripts to the folder
 COPY .  /fast-api
