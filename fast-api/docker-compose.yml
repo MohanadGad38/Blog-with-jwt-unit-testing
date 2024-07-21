@@ -1,10 +1,10 @@
 version: "3"
 services:
-  api:
+  app:
     build: .
-    image: fast-api
-    command: sh -c "uvicorn blog.main:app --reload --host localhost --port 80"
+    container_name: simple-python-server
+    command: uvicorn blog.main:app --host 0.0.0.0 --port 80 --reload
     ports:
-      - "8000:80"
+      - 8080:80
     volumes:
-      - .:/fast-api:ro
+       - .:/fast-api:ro

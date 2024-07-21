@@ -1,6 +1,14 @@
-FROM python:3.10 as python-base
-WORKDIR  /fast-api
-COPY . /fast-api 
-RUN pip3 install -r requirements.txt
-COPY . .
+FROM python:latest
 
+# set the working directory
+WORKDIR  /fast-api
+
+# install dependencies
+COPY ./requirements.txt  /fast-api
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+# copy the scripts to the folder
+COPY .  /fast-api
+
+# start the server
+CMD ["uvicorn", "blog.main:app", "--host", "0.0.0.0", "--port", "80"]
