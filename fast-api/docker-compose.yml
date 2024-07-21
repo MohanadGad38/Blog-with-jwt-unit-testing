@@ -7,4 +7,4 @@ services:
     ports:
       - 8080:80
     volumes:
-       - .:/fast-api:ro
+       - .:/fast-api
