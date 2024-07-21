@@ -1,7 +1,7 @@
 from fastapi import Depends, status, HTTPException
-import schemas
-import models
-from database import get_db
+from blog import schemas
+from blog import models
+from blog.database import get_db
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from typing import List
 from sqlalchemy.orm import Session, selectinload, joinedload

@@ -1,8 +1,8 @@
 from fastapi import Depends, status, HTTPException
-import schemas
-import models
-import hash_p
-from database import get_db
+from blog import schemas
+from blog import models
+from blog import hash_p
+from blog.database import get_db
 from sqlalchemy.orm import Session
 from typing import List
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
