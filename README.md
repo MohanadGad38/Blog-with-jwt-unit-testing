@@ -1,6 +1,3 @@
-Great! Here's the refined project description formatted for GitHub:
-
----
 
 # FastAPI Project for Blogs Website
 
