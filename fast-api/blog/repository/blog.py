@@ -17,7 +17,7 @@ async def get_all(db: AsyncSession = Depends(get_db)):
     return blogs
 
 
-async def create(request: schemas.addblog, db: AsyncSession = Depends(get_db)):
+async def create(request: schemas.AddBlog, db: AsyncSession = Depends(get_db)):
     new_blog: models.Blog = models.Blog(
         title=request.title, body=request.body, user_id=request.userid)
     db.add(new_blog)
@@ -49,7 +49,7 @@ async def delete(id: int, db: AsyncSession = Depends(get_db)):
     return {"message": "Blog deleted successfully"}
 
 
-async def update(request: schemas.blog, id: int, db: AsyncSession = Depends(get_db)):
+async def update(request: schemas.Blog, id: int, db: AsyncSession = Depends(get_db)):
     result = select(models.Blog).where(models.Blog.id == id)
     query_result = await db.execute(result)
     blog = query_result.scalar_one_or_none()
@@ -68,7 +68,7 @@ async def update(request: schemas.blog, id: int, db: AsyncSession = Depends(get_
     return {"message": "Blog updated successfully"}
 
 
-async def get_one(id: int, db: AsyncSession = Depends(get_db)) -> Any | schemas.show_blog | None:
+async def get_one(id: int, db: AsyncSession = Depends(get_db)) -> Any | schemas.ShowBlog | None:
     statement: models.Blog = select(models.Blog).options(
         joinedload(models.Blog.creator)).where(models.Blog.id == id)
     result = await db.execute(statement)

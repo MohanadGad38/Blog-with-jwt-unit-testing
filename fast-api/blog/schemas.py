@@ -2,33 +2,33 @@ from pydantic import BaseModel, EmailStr
 from typing import Annotated, Union, Optional
 
 
-class blogbase(BaseModel):
+class BlogBase(BaseModel):
     title: str
     body: str
 
 
-class blog(blogbase):
+class Blog(BlogBase):
     class Config():
         from_attributes = True
 
 
-class addblog(blogbase):
+class AddBlog(BlogBase):
     userid: str
 
     class Config():
         from_attributes = True
 
 
-class user(BaseModel):
+class User(BaseModel):
     name: str
     email: EmailStr
     password: str
 
 
-class show_user(BaseModel):
+class ShowUser(BaseModel):
     name: str
     email: str
-    blogs: list[blog] = []
+    blogs: list[Blog] = []
 
     class Config:
         from_attributes = True
@@ -42,7 +42,7 @@ class ShowUserNameAndEmail(BaseModel):
         from_attributes = True
 
 
-class show_blog(BaseModel):
+class ShowBlog(BaseModel):
     title: str
     body: str
     creator: ShowUserNameAndEmail
@@ -51,10 +51,10 @@ class show_blog(BaseModel):
         from_attributes = True
 
 
-show_user.update_forward_refs()
+ShowUser.update_forward_refs()
 
 
-class login(BaseModel):
+class Login(BaseModel):
     username: str
     password: str
 

@@ -10,7 +10,7 @@ from sqlalchemy import create_engine, Column, Integer, String, select
 from typing import Tuple, Optional, Dict, Any
 
 
-async def create(request: schemas.user, db: AsyncSession = Depends(get_db)) -> models.Users:
+async def create(request: schemas.User, db: AsyncSession = Depends(get_db)) -> models.Users:
     new_user: models.Users = models.Users(
         name=request.name, email=request.email,
         password=hash_p.hashing.create_hash(request.password))
