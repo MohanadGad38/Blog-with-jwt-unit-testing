@@ -3,8 +3,37 @@ services:
   app:
     build: .
     container_name: blog-app
-    command: uvicorn blog.main:app --host 0.0.0.0 --port 80 --reload
+    command: uvicorn blog.main:app --host 0.0.0.0 --port 90 --reload
     ports:
-      - 8080:80
+      - 8080:90
     volumes:
        - .:/fast-api
+  production_db:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+       POSTGRES_USER: Mohand_gad
+       POSTGRES_PASSWORD: 1G
+       POSTGRES_DB: blogs       
+  test_db:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - 5434:5432
+    environment:
+       POSTGRES_USER: Mohand_gad
+       POSTGRES_PASSWORD: 1G
+       POSTGRES_DB: blogs_test    
+  
+  database_mangement:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 8888:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: Mohand_gad@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 12345678m@
+      
+    
