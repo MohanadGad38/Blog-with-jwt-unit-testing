@@ -34,7 +34,7 @@ This project is a REST API for a blogs website, developed using FastAPI. It inco
 
 ## Updates (As of 11/8)
 1. **Database Engine**: Transitioned from SQLite to PostgreSQL to leverage advanced features and improve performance.
-2. **Database mangement Tool**: Integrated adminpg for managing database and viewing it.
+2. **Database mangement Tool**: Integrated adminpg for managing and viewing the PostgreSQL database.
 
 
 ## To-Do List
