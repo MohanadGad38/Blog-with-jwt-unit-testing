@@ -13,19 +13,9 @@ services:
     restart: always
     ports:
       - 5433:5432
-    environment:
-       POSTGRES_USER: Mohand_gad
-       POSTGRES_PASSWORD: 1G
-       POSTGRES_DB: blogs       
-  test_db:
-    image: postgres:16-alpine
-    restart: always
-    ports:
-      - 5434:5432
-    environment:
-       POSTGRES_USER: Mohand_gad
-       POSTGRES_PASSWORD: 1G
-       POSTGRES_DB: blogs_test    
+   
+   
+  
   
   database_mangement:
     image: dpage/pgadmin4
