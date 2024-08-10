@@ -7,9 +7,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase, Mapped, mapped_column
+import os
+from dotenv import load_dotenv
 
-
-SQLALCHAMY_DATABASE_URL = "sqlite+aiosqlite:///blog.db"
+load_dotenv()
+SQLALCHAMY_DATABASE_URL = os.getenv('DATABASE_URL')
 engine: AsyncEngine = create_async_engine(SQLALCHAMY_DATABASE_URL, connect_args={
     "check_same_thread": False})
 SessionLocal = async_sessionmaker(engine)

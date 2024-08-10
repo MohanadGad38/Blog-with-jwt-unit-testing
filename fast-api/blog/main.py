@@ -2,7 +2,11 @@ from fastapi import FastAPI
 import uvicorn
 from blog.database import engine
 from blog.routes import blog, user, login
-
+import os
+from dotenv import load_dotenv, dotenv_values
+load_dotenv()
+config = dotenv_values(".env")
+print(os.getenv("DATABASE_URL"))
 
 app = FastAPI()
 app.include_router(blog.router)
