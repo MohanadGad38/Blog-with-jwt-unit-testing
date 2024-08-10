@@ -13,6 +13,8 @@ services:
     restart: always
     ports:
       - 5433:5432
+    env_file:
+      - ./blog/database.env
    
    
   
@@ -22,8 +24,8 @@ services:
     restart: always
     ports:
       - 8888:80
-    environment:
-      PGADMIN_DEFAULT_EMAIL: Mohand_gad@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: 12345678m@
+    env_file:
+      - ./blog/database_mangement.env
+
       
     
