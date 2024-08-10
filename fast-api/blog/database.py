@@ -12,8 +12,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 SQLALCHAMY_DATABASE_URL = os.getenv('DATABASE_URL')
-engine: AsyncEngine = create_async_engine(SQLALCHAMY_DATABASE_URL, connect_args={
-    "check_same_thread": False})
+engine: AsyncEngine = create_async_engine(SQLALCHAMY_DATABASE_URL, future=True,
+                                          echo=True,)
 SessionLocal = async_sessionmaker(engine)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -22,10 +22,14 @@ class Base(DeclarativeBase):
     pass
 
 
-async def get_db():
+async def create_database_if_not_exists():
     async with engine.begin() as conn:
+        # Create the database if it does not exist
         await conn.run_sync(Base.metadata.create_all)
 
+
+async def get_db():
+    await create_database_if_not_exists()
     db = SessionLocal()
     try:
         yield db
