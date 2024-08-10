@@ -1,6 +1,4 @@
-Here’s an optimized version of your `README.md` for GitHub, incorporating the updates and maintaining clarity and readability:
 
----
 
 # FastAPI Project for Blogs Website
 
