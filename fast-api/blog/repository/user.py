@@ -28,12 +28,15 @@ async def create(request: schemas.User, db: AsyncSession = Depends(get_db)) -> m
 
 
 async def get(id: int, db: AsyncSession = Depends(get_db)) -> Optional[Dict[str, str]]:
-    # add types please
-    statement = select(models.Users.name, models.Users.email).where(
-        models.Users.id == id)
-    result = await db.execute(statement)
-    user: schemas.ShowUserNameAndEmail = result.first()
-    # print(user)
+    # Query the database to get the user's name and email
+    # statement = select(models.Users.name, models.Users.email).where(
+    #     models.Users.id == id
+    # )
+    # result = await db.execute(statement)
+    # user: Optional[schemas.ShowUserNameAndEmail] = result.scalar_one_or_none()
+    user = await db.get(models.Users, id)
+    # Raise an exception if the user is not found
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
     return user

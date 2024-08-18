@@ -43,7 +43,7 @@ async def delete(id: int, db: AsyncSession = Depends(get_db)):
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="Blog not found")
 
-        db.delete(blog)
+        await db.delete(blog)
         await db.commit()
 
     return {"message": "Blog deleted successfully"}

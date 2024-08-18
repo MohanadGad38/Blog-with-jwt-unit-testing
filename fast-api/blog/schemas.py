@@ -13,7 +13,7 @@ class Blog(BlogBase):
 
 
 class AddBlog(BlogBase):
-    userid: str
+    userid: int
 
     class Config():
         from_attributes = True

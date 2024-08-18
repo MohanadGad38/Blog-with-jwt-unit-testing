@@ -8,6 +8,7 @@ from blog.database import engine, get_db
 from sqlalchemy.orm import Session
 from typing import List
 from blog.repository import user
+from typing import Optional
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 router = APIRouter(
     prefix="/user",
@@ -20,6 +21,7 @@ async def create_user(request: schemas.User, db: AsyncSession = Depends(get_db))
     return await user.create(request, db)
 
 
-@router.get(f"/{id}", status_code=201, response_model=schemas.ShowUserNameAndEmail)
-async def get_user(id: int, db: AsyncSession = Depends(get_db), get_current_user: schemas.User = Depends(oauth2.get_current_user)) -> user.Dict[str, str] | None:
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.ShowUserNameAndEmail)
+async def get_user(id: int, db: AsyncSession = Depends(get_db),
+                   get_current_user: schemas.User = Depends(oauth2.get_current_user)) -> Optional[schemas.ShowUserNameAndEmail]:
     return await user.get(id, db)

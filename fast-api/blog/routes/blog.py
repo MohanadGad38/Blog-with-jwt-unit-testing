@@ -37,5 +37,5 @@ async def delete_blog(id: int, db: AsyncSession = Depends(get_db), get_current_u
 
 
 @ router.put(f"/{id}", status_code=status.HTTP_202_ACCEPTED)
-async def update_blog(id, request: schemas.Blog, db: AsyncSession = Depends(get_db), get_current_user: schemas.User = Depends(oauth2.get_current_user)):
+async def update_blog(id: int, request: schemas.Blog, db: AsyncSession = Depends(get_db), get_current_user: schemas.User = Depends(oauth2.get_current_user)):
     return await blog.update(request, id, db)
