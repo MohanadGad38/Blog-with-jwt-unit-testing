@@ -22,14 +22,14 @@ class Base(DeclarativeBase):
     pass
 
 
-async def create_database_if_not_exists():
-    async with engine.begin() as conn:
-        # Create the database if it does not exist
-        await conn.run_sync(Base.metadata.create_all)
+# async def create_database_if_not_exists():
+#     async with engine.begin() as conn:
+#         # Create the database if it does not exist
+#         await conn.run_sync(Base.metadata.create_all)
 
 
 async def get_db():
-    await create_database_if_not_exists()
+    # await create_database_if_not_exists()
     db = SessionLocal()
     try:
         yield db
