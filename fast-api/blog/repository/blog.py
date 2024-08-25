@@ -61,11 +61,12 @@ async def update(request: schemas.Blog, id: int, db: AsyncSession = Depends(get_
     # Update the blog attributes
     blog.title = request.title
     blog.body = request.body
-
+# handel exceptions
     # Commit the changes
     await db.commit()
 
     return {"message": "Blog updated successfully"}
+# json file for messages
 
 
 async def get_one(id: int, db: AsyncSession = Depends(get_db)) -> Any | schemas.ShowBlog | None:

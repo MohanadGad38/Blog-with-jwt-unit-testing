@@ -15,6 +15,7 @@ class Blog(Base):
     test: Mapped[str]
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('Users.id'))
     creator: Mapped['Users'] = relationship("Users", back_populates="blogs")
+# create index for title
 
 
 class Users(Base):

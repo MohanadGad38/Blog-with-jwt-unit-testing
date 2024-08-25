@@ -9,6 +9,9 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy import create_engine, Column, Integer, String, select
 from typing import Tuple, Optional, Dict, Any
 
+# encrypt and i will decrypt password
+# one cenntionc and connection ppoling for db
+
 
 async def create(request: schemas.User, db: AsyncSession = Depends(get_db)) -> models.Users:
     new_user: models.Users = models.Users(

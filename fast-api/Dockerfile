@@ -1,12 +1,13 @@
-FROM python:3.12.0
+FROM python:3.12.0    #use bset practice 
 
 # set the working directory
 WORKDIR  /fast-api
 
 # install dependencies
 COPY ./pyproject.toml   /fast-api
+      #source            #destinastion
 
-RUN pip install poetry
+RUN pip install poetry   #version 
 RUN poetry config virtualenvs.create false
 RUN poetry install  
 #no update
@@ -16,4 +17,4 @@ RUN poetry install
 COPY .  /fast-api
 
 # start the server
-CMD ["uvicorn", "blog.main:app", "--host", "0.0.0.0", "--port", "80"]
+# CMD ["uvicorn", "blog.main:app", "--host", "0.0.0.0", "--port", "80"]

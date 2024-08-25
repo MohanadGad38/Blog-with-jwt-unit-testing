@@ -25,3 +25,4 @@ async def create_user(request: schemas.User, db: AsyncSession = Depends(get_db))
 async def get_user(id: int, db: AsyncSession = Depends(get_db),
                    get_current_user: schemas.User = Depends(oauth2.get_current_user)) -> Optional[schemas.ShowUserNameAndEmail]:
     return await user.get(id, db)
+# authrioztion

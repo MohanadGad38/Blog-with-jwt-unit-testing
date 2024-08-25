@@ -1,4 +1,4 @@
-version: "3"
+version: "3"  #use latets version 
 services:
   app:
     build: .
@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:90
     volumes:
-       - .:/fast-api
+       - .:/fast-api   # do not use it in produiction 
   production_db:
     image: postgres:16-alpine
     restart: always
@@ -17,7 +17,7 @@ services:
       - ./blog/database.env
    
    
-  
+  # zbt network, find a way to run a docker with migrations, adjust voulme
   
   database_mangement:
     image: dpage/pgadmin4
@@ -28,4 +28,8 @@ services:
       - ./blog/database_mangement.env
 
       
+    #single connection 
+    #strutcre of the project
+    #authtionction 
+    #select models orm 
     
