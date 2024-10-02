@@ -1,2 +1,4 @@
 *.env
 alembic.ini
+poerty.lock
+.venv
