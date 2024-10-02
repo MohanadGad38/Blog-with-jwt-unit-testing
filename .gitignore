@@ -3,3 +3,4 @@ alembic.ini
 poetry.lock
 .venv
 __pycache__
+.DS_Store
