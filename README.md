@@ -38,6 +38,7 @@ This project is a REST API for a blogs website, developed using FastAPI. It inco
 
 
 ## To-Do List
+1. ** sturtce projetc**
 2. **Database Migration Tool**: Continue using Alembic for migrations.
 3. **Separate Databases**: Maintain and manage separate databases for production and testing.
 4. **Comprehensive Unit Tests**: Develop unit tests using the test database.
