@@ -12,7 +12,6 @@ class Blog(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     title: Mapped[str]
     body: Mapped[str]
-    test: Mapped[str]
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey('Users.id'))
     creator: Mapped['Users'] = relationship("Users", back_populates="blogs")
 
