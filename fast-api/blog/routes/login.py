@@ -1,16 +1,15 @@
 from fastapi import Depends, status, HTTPException, APIRouter
 from blog import schemas
-from blog import models
 from blog import hash_p
 from blog import JWTToken
-from blog.database import get_db
+from blog.database.session import get_db
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy import create_engine, Column, Integer, String, select
-
+from blog.database.models.Users_model import Users
 router = APIRouter(
     prefix="/login",
     tags=['Login']
@@ -19,8 +18,8 @@ router = APIRouter(
 
 @router.post('/')
 async def login(request: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)) -> dict[str, str]:
-    user_query: models.Users = select(models.Users).where(
-        models.Users.email == request.username)
+    user_query: Users = select(Users).where(
+        Users.email == request.username)
     result = await db.execute(user_query)
     user = result.scalar_one_or_none()
     if not user:

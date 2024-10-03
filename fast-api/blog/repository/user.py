@@ -1,17 +1,17 @@
 from fastapi import Depends, status, HTTPException
 from blog import schemas
-from blog import models
 from blog import hash_p
-from blog.database import get_db
+from blog.database.session import get_db
 from sqlalchemy.orm import Session
 from typing import List
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy import create_engine, Column, Integer, String, select
 from typing import Tuple, Optional, Dict, Any
+from blog.database.models.Users_model import Users
 
 
-async def create(request: schemas.User, db: AsyncSession = Depends(get_db)) -> models.Users:
-    new_user: models.Users = models.Users(
+async def create(request: schemas.User, db: AsyncSession = Depends(get_db)) -> Users:
+    new_user: Users = Users(
         name=request.name, email=request.email,
         password=hash_p.hashing.create_hash(request.password))
     db.add(new_user)
@@ -34,7 +34,7 @@ async def get(id: int, db: AsyncSession = Depends(get_db)) -> Optional[Dict[str,
     # )
     # result = await db.execute(statement)
     # user: Optional[schemas.ShowUserNameAndEmail] = result.scalar_one_or_none()
-    user = await db.get(models.Users, id)
+    user = await db.get(Users, id)
     # Raise an exception if the user is not found
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)

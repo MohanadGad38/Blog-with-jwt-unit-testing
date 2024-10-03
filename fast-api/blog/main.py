@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from blog.database import engine
+from blog.database.session import engine
 from blog.routes import blog, user, login
 import os
 from dotenv import load_dotenv, dotenv_values
