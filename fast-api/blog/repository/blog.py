@@ -2,22 +2,23 @@ from fastapi import Depends, status, HTTPException
 from blog import schemas
 from blog.database.session import get_db
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from typing import List
+from typing import List, Sequence
 from sqlalchemy.orm import Session, selectinload, joinedload
-from sqlalchemy import create_engine, Column, Integer, String, select
+from sqlalchemy import Result, Select, create_engine, Column, Integer, String, select
 from typing import Tuple, Optional, Dict, Any
+from blog.database.models.Blog_model import Blog
 
 
-async def get_all(db: AsyncSession = Depends(get_db)):
+async def get_all(db: AsyncSession = Depends(get_db)) -> Sequence[Blog]:
     result = await db.execute(
-        select(models.Blog).options(joinedload(models.Blog.creator))
+        select(Blog).options(joinedload(Blog.creator))
     )
     blogs = result.scalars().all()
     return blogs
 
 
-async def create(request: schemas.AddBlog, db: AsyncSession = Depends(get_db)):
-    new_blog: models.Blog = models.Blog(
+async def create(request: schemas.AddBlog, db: AsyncSession = Depends(get_db)) -> Blog:
+    new_blog: Blog = Blog(
         title=request.title, body=request.body, user_id=request.userid)
     db.add(new_blog)
     try:
@@ -34,7 +35,7 @@ async def create(request: schemas.AddBlog, db: AsyncSession = Depends(get_db)):
 
 async def delete(id: int, db: AsyncSession = Depends(get_db)):
     async with db.begin():
-        blog_query = select(models.Blog).where(models.Blog.id == id)
+        blog_query = select(Blog).where(Blog.id == id)
         result = await db.execute(blog_query)
         blog = result.scalar_one_or_none()
 
@@ -49,9 +50,9 @@ async def delete(id: int, db: AsyncSession = Depends(get_db)):
 
 
 async def update(request: schemas.Blog, id: int, db: AsyncSession = Depends(get_db)):
-    result = select(models.Blog).where(models.Blog.id == id)
-    query_result = await db.execute(result)
-    blog = query_result.scalar_one_or_none()
+    result: Select[Tuple[Blog]] = select(Blog).where(Blog.id == id)
+    query_result: Result[Tuple[Blog]] = await db.execute(result)
+    blog: Blog | None = query_result.scalar_one_or_none()
 
     if not blog:
         raise HTTPException(
@@ -68,8 +69,8 @@ async def update(request: schemas.Blog, id: int, db: AsyncSession = Depends(get_
 
 
 async def get_one(id: int, db: AsyncSession = Depends(get_db)) -> Any | schemas.ShowBlog | None:
-    statement: models.Blog = select(models.Blog).options(
-        joinedload(models.Blog.creator)).where(models.Blog.id == id)
+    statement: Blog = select(Blog).options(
+        joinedload(Blog.creator)).where(Blog.id == id)
     result = await db.execute(statement)
     blog: schemas.show_blog = result.scalar_one_or_none()
     if not blog:
