@@ -1,5 +1,5 @@
 from fastapi import Depends, status, HTTPException
-from blog import schemas
+from blog.schemas import user_schema, blog_schema, blog_user_shared
 from blog import hash_p
 from blog.database.session import get_db
 from sqlalchemy.orm import Session
@@ -10,7 +10,7 @@ from typing import Tuple, Optional, Dict, Any
 from blog.database.models.Users_model import Users
 
 
-async def create(request: schemas.User, db: AsyncSession = Depends(get_db)) -> Users:
+async def create(request: user_schema.User, db: AsyncSession = Depends(get_db)) -> Users:
     new_user: Users = Users(
         name=request.name, email=request.email,
         password=hash_p.hashing.create_hash(request.password))
