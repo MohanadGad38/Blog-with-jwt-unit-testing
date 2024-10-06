@@ -9,17 +9,15 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase, Mapped, mapped_column
 import os
 from dotenv import load_dotenv
+from blog.database.base import settings
+from blog.database.base import base
 
 load_dotenv()
-SQLALCHAMY_DATABASE_URL = os.getenv('DATABASE_URL')
+SQLALCHAMY_DATABASE_URL: str | None = settings.DATABASE_URL
 engine: AsyncEngine = create_async_engine(SQLALCHAMY_DATABASE_URL, future=True,
                                           echo=True,)
 SessionLocal = async_sessionmaker(engine)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-class Base(DeclarativeBase):
-    pass
 
 
 # async def create_database_if_not_exists():

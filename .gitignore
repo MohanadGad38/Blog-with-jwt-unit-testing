@@ -1,3 +1,5 @@
 *.env
-*__pycahcxe__
+*__pycache__
 *.DS_Store
+poetry.lock
+.DS_Store

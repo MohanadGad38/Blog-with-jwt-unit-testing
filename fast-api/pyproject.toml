@@ -19,10 +19,16 @@ python-dotenv = "^1.0.1"
 asyncpg = "^0.29.0"
 pytest-asyncio = "^0.23.8"
 alembic = "^1.13.2"
+pydantic-settings = "^2.5.2"
+pydantic = "^2.9.2"
+setuptools = "^75.1.0"
+redis = "^5.1.0"
+slowapi = "^0.1.9"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.2"
-pytest-asyncio = "^0.23.8"
+
+
+
+
 
 [build-system]
 requires = ["poetry-core"]
