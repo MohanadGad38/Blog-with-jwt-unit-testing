@@ -4,7 +4,7 @@ FROM python:3.12.0
 WORKDIR  /fast-api
 
 # install dependencies
-COPY ./pyproject.toml   /fast-api
+COPY ./pyproject.toml ./.env  /fast-api
 
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
@@ -15,5 +15,5 @@ RUN poetry install
 # copy the scripts to the folder
 COPY .  /fast-api
 
-# start the server
-CMD ["uvicorn", "blog.main:app", "--host", "0.0.0.0", "--port", "80"]
+# # start the server
+# CMD ["uvicorn", "blog.main:app", "--host", "0.0.0.0", "--port", "80"]
