@@ -14,18 +14,32 @@ services:
     ports:
       - 5433:5432
     env_file:
-      - ./blog/database.env
-   
-   
-  
-  
+      - database.env
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - database_network
+
   database_mangement:
     image: dpage/pgadmin4
     restart: always
     ports:
       - 8888:80
     env_file:
-      - ./blog/database_mangement.env
+      - database_mangement.env
+    volumes:
+      - pgadmins:/var/lib/pgadmin/cache
+    networks:
+      - database_network
+
+
+volumes:
+  database:
+  pgadmins:
+
+
+networks:
+  database_network:
 
       
     
